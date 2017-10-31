@@ -36,7 +36,10 @@ urlpatterns = [
     url(r'^getTodayMinPriceForForFullSetDate', StockPushingController.getTodayMinPriceForForFullSetDate),
     url(r'^GetStockCodeListForPushingDate', AnalyzeStockPushing.GetStockCodeListForPushingDate),
     url(r'^GetStockForAnalyzeInPeriod', AnalyzeStockPushing.getStockForAnalyzeInPeriod),
+
     url(r'^GetTheDateMinPriceForForFullSetDate/$', StockPushingController.getTheDateMinPriceForForFullSetDate),
     url(r'^GetMinPriceForFullSetDateForPushingDate/$', StockPushingController.getMinPriceForFullSetDateForPushingDate),
     url(r'^getMinPriceForStockOnDate/$', ManageStockPushingController.getMinPriceForStockOnDate),
+
+    url(r'^Collect_stock_pushing_in_period', AnalyzeStockPushing.collect_stock_pushing_in_period),
 ]

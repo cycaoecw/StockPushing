@@ -19,12 +19,13 @@ def getStockCodeByName(stockName):
     else:
         return 0
 
+
 def getStockPushingForDate(pushingDate):
     # SQL 查询语句
     Common.LogHandler.logging("start DAL.getStockPushing")
 
     listStock = []
-    strPushingDate = pushingDate #datetime.datetime.strftime(pushingDate, '%Y-%m-%d'
+    strPushingDate = pushingDate  # datetime.datetime.strftime(pushingDate, '%Y-%m-%d'
     sql = "select * from stockpush_pushingstock where Date(ValidateTime) = '" \
           + strPushingDate + "'"
     c = Common.MySqlDbHelper.getResults(sql)
@@ -35,13 +36,15 @@ def getStockPushingForDate(pushingDate):
     Common.LogHandler.logging("end DAL.getStockPushing")
     return listStock
 
+
 def getStockPushingFromRow(row):
-    model = StockPushing(row['id'], row['stockname'], row['source'], row['createtime'], row['validatetime'], row['type'])
+    model = StockPushing(row['id'], row['stockname'], row['source'], row['createtime'], row['validatetime'],
+                         row['type'])
     return model
 
-def getOpenPriceOnNextDay(nextDate, code):
 
-    strPushingDate = nextDate #datetime.datetime.strftime(pushingDate, '%Y-%m-%d'
+def getOpenPriceOnNextDay(nextDate, code):
+    strPushingDate = nextDate  # datetime.datetime.strftime(pushingDate, '%Y-%m-%d'
     sql = "select * from stockpush_stockminprice where code = " + str(code) + " and checkDate = '" \
           + strPushingDate + "' and checkTime > '09:29:59' order by price desc limit 1"
 
@@ -52,6 +55,33 @@ def getOpenPriceOnNextDay(nextDate, code):
     # row = Common.MySqlDbHelper.getResults(sql)
 
     return price
+
+
+def exit_record_in_analyze(code, pushingDate):
+    # SQL 查询语句
+
+
+    listStock = []
+    strPushingDate = pushingDate  # datetime.datetime.strftime(pushingDate, '%Y-%m-%d'
+    sql = "select * from stockpush_analyze_stock where pushdate = '" \
+          + strPushingDate + "' and code = '" + str(code) + "'"
+    c = Common.MySqlDbHelper.getResults(sql)
+    for row in Common.MySqlDbHelper.generate_dicts(c):
+        return True
+
+    return False
+
+
+def insert_record_in_analyze(code, pushingDate, name, pushingPrice, pushingTime, nextPrice):
+    # utf8StockName = name.encode("utf-8")
+    # name = str.strip(utf8StockName)
+    sql = "insert into stockpush_analyze_stock(code, pushdate, pushtime, pushprice, nextdayhighprice, name) values (" \
+          + str(code) + ", '" + pushingDate + "', '" + pushingTime + "', " + str(pushingPrice) + ", " + str(nextPrice) \
+          + ", '" + name + "')"
+
+    ret = Common.MySqlDbHelper.executeSql(sql)
+    return
+
 
 def getHolidayList():
     # SQL 查询语句
