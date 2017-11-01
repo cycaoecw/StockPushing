@@ -149,8 +149,17 @@ def collect_stock_pushing_on_date(pushingDate):
 
     for m in listStockNoDuplicated:
         if not StockPushingDAL.AnalyzPushingDAL.exit_record_in_analyze(m["code"], strPushingDate):
+            print("Insert: %s on date %s" % (m["code"], strPushingDate))
             nextDayPrice = StockPushingDAL.AnalyzPushingDAL.getOpenPriceOnNextDay(strNextDate, m["code"])
-            StockPushingDAL.AnalyzPushingDAL.insert_record_in_analyze(m["code"], strPushingDate, m["name"], m["price"],
-                                                                      "00:00", nextDayPrice)
+            if nextDayPrice != 0:
+                time_array = str(m["time"]).split()
+                str_date = time_array[0]
+                str_time = time_array[1]
+                StockPushingDAL.AnalyzPushingDAL.insert_record_in_analyze(m["code"], str_date, m["name"], m["price"],
+                                                                          str_time, nextDayPrice)
+            else:
+                print("No insert due to no next day price: %s on date %s" % (m["code"], strPushingDate))
+        else:
+            print("No insert: %s on date %s" % (m["code"], strPushingDate))
 
     return
