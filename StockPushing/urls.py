@@ -1,6 +1,7 @@
 from . import StockPushingController
 from . import AnalyzeStockPushing
 from . import ManageStockPushingController
+from . import StockPushing_Mongo_Controller
 """StockPushing URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -42,4 +43,6 @@ urlpatterns = [
     url(r'^getMinPriceForStockOnDate/$', ManageStockPushingController.getMinPriceForStockOnDate),
 
     url(r'^Collect_stock_pushing_in_period', AnalyzeStockPushing.collect_stock_pushing_in_period),
+
+    url(r'^MongoTestSave', StockPushing_Mongo_Controller.TestSave),
 ]
