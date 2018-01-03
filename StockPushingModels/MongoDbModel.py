@@ -15,9 +15,8 @@ class Ranking(Document):
     3. 大单
     4. 净利
     """
-    r_type = IntField(default=0)
+    r_type = StringField(default="")
     r_rank = IntField(default=0)
     r_name = StringField(default="")
     r_code = IntField(default=0)
-    r_date = DateTimeField()
-    r_time = DateTimeField()
+    r_datetime = DateTimeField()

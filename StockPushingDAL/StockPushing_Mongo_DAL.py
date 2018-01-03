@@ -14,4 +14,11 @@ def TestSave():
         ranking.save()
     except Exception as e:
         print("保存失败 data=%s" % post.to_json(), exc_info=True)
-    return 
+    return
+
+def SaveRanking(ranking):
+    try:
+        ranking.save()
+    except Exception as e:
+        print("保存失败 data=%s" % ranking.to_json(), exc_info=True)
+    return
