@@ -23,68 +23,96 @@ def SaveRanking(request):
     '''
 
     str_json = """
-[
-    {
-        "name": "raising",
-        "ranking": [
-            {
-                "name": "振静股份",
-                "code": 111,
-                "price": 1
-            },
-            {
-                "name": "北京科锐",
-                "code": 222,
-                "price": 2
-            }
-        ]
-    },
-    {
-        "name": "change",
-        "ranking": [
-            {
-                "name": "美芝股份",
-                "code": 333,
-                "price": 3
-            },
-            {
-                "name": "蒙草生态",
-                "code": 444,
-                "price": 4
-            }
-        ]
-    },
-    {
-        "name": "deal",
-        "ranking": [
-            {
-                "name": "文一科技",
-                "code": 555,
-                "price": 5
-            },
-            {
-                "name": "雅克科技",
-                "code": 666,
-                "price": 6
-            }
-        ]
-    },
-    {
-        "name": "net",
-        "ranking": [
-            {
-                "name": "北斗星通",
-                "code": 777,
-                "price": 7
-            },
-            {
-                "name": "武汉凡谷",
-                "code": 888,
-                "price": 8
-            }
-        ]
-    }
-]
+{
+    "compare": 3,
+    "hit_rule": 4,
+    "list": [
+        {
+            "name": "raising",
+            "ranking": [
+                {
+                    "name": "振静股份",
+                    "code": 111,
+                    "price": 1
+                },
+                {
+                    "name": "北斗星通",
+                    "code": 222,
+                    "price": 2
+                }
+                ,
+                {
+                    "name": "北京科锐",
+                    "code": 222,
+                    "price": 2
+                }
+            ]
+        },
+        {
+            "name": "change",
+            "ranking": [
+                {
+                    "name": "美芝股份",
+                    "code": 333,
+                    "price": 3
+                },
+                {
+                    "name": "蒙草生态",
+                    "code": 444,
+                    "price": 4
+                }
+                ,
+                {
+                    "name": "北京科锐",
+                    "code": 222,
+                    "price": 2
+                }
+            ]
+        },
+        {
+            "name": "deal",
+            "ranking": [
+                {
+                    "name": "文一科技",
+                    "code": 555,
+                    "price": 5
+                },
+                {
+                    "name": "雅克科技",
+                    "code": 666,
+                    "price": 6
+                }
+                ,
+                {
+                    "name": "北京科锐",
+                    "code": 222,
+                    "price": 2
+                }
+            ]
+        },
+        {
+            "name": "net",
+            "ranking": [
+                {
+                    "name": "北斗星通",
+                    "code": 777,
+                    "price": 7
+                },
+                {
+                    "name": "武汉凡谷",
+                    "code": 888,
+                    "price": 8
+                }
+                ,
+                {
+                    "name": "北京科锐",
+                    "code": 222,
+                    "price": 2
+                }
+            ]
+        }
+    ]
+}
 """
     d = json.loads(str_json)
 
