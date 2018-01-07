@@ -22,3 +22,10 @@ def SaveRanking(ranking):
     except Exception as e:
         print("保存失败 data=%s" % ranking.to_json(), exc_info=True)
     return
+
+def SavePushingStock(pushing):
+    try:
+        pushing.save()
+    except Exception as e:
+        print("保存失败 data=%s" % pushing.to_json(), exc_info=True)
+    return

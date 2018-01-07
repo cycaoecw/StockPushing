@@ -46,5 +46,5 @@ urlpatterns = [
     url(r'^Collect_stock_pushing_in_period', AnalyzeStockPushing.collect_stock_pushing_in_period),
     #用mongoDB后的api
     url(r'^MongoTestSave', StockPushing_Mongo_Controller.TestSave),
-    url(r'^SaveRanking', StockPushing_Mongo_Controller.SaveRanking),
+    url(r'^SaveRanking/$', StockPushing_Mongo_Controller.SaveRanking),
 ]

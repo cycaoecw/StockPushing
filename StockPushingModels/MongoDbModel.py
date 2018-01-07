@@ -3,6 +3,8 @@ from mongoengine import IntField
 from mongoengine import StringField
 from mongoengine import DateTimeField
 from mongoengine import DecimalField
+from mongoengine import DictField
+
 import Common.MongoDbHelper
 
 Common.MongoDbHelper.ConnectMongoDB()
@@ -22,3 +24,11 @@ class Ranking(Document):
     r_code = IntField(default=0)
     r_datetime = DateTimeField()
     r_price = DecimalField(default=0, precision=2)
+
+class PushingStock(Document):
+    p_type =IntField(default = 0)
+    p_name = StringField(default="")
+    p_code = IntField(default=0)
+    p_price = DecimalField(default=0, precision=2)
+    p_dattime = DateTimeField()
+    p_dict_list = DictField()

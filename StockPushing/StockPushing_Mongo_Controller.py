@@ -22,10 +22,13 @@ def SaveRanking(request):
     test
     '''
 
+
+
     str_json = """
 {
     "compare": 3,
     "hit_rule": 4,
+    "push_date_time": "2018-01-07 10:01:03",
     "list": [
         {
             "name": "raising",
@@ -114,12 +117,20 @@ def SaveRanking(request):
     ]
 }
 """
-    d = json.loads(str_json)
 
-
+    str_request_json = request.POST.get('str_json')
     model = HttpResp()
-    model.Model = StockPushing_Mongo_BLL.SaveRanking(d)
-    model.Status = '200'
-    model.Msg = 'success'
+    if str_request_json == None:
+        d = json.loads(str_json)
+        model.Model = StockPushing_Mongo_BLL.SaveRanking(d)
+        model.Status = '200'
+        model.Msg = 'success'
+    else:
+        model.Model = "No json str"
+        model.Status = '511'
+        model.Msg = 'Failed'
+
+
+
 
     return HttpResponse(json.dumps(model, default=lambda o: o.__dict__, ensure_ascii=False))
