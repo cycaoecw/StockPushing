@@ -1,19 +1,23 @@
+#encoding: utf-8
 from StockPushingDAL import StockPushing_Mongo_DAL
 from StockPushingModels.MongoDbModel import Ranking, PushingStock
 from StockPushingDAL import StockPushingDal
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, time
+from Common import JpushHelper
+import pytz
 
 def TestSave():
     StockPushing_Mongo_DAL.TestSave()
     return
 
 def SaveRanking(dict_rank):
-    tz_utc_8 = timezone(timedelta(hours=8))  # 创建时区UTC+8:00
+
 
     if "compare" in dict_rank and "list" in dict_rank and "hit_rule" in dict_rank:
-        int_compare_rank = int(dict_rank["compare"])
-        int_hit_rule = int(dict_rank["hit_rule"])
+        int_compare_rank = int(dict_rank["compare"]) #只查看榜中的前几个
+        int_hit_rule = int(dict_rank["hit_rule"])    #中了多少个榜就推送
         dict_hitting_stock = dict()
+        tzSH = pytz.timezone('Asia/Shanghai')
 
         str_push_date_time = dict_rank["push_date_time"] # e.g. 2017-09-10 10:01:03
         dtPushingDate = ""
@@ -32,7 +36,7 @@ def SaveRanking(dict_rank):
                 i_ranking = i_ranking + 1
                 str_stock_name = ranking_stock["name"]
                 int_stock_code = getStockCodeByName(ranking_stock["name"])  # int(ranking_stock["code"])
-
+                ranking_stock["code"] = int_stock_code
 
                 #把记录保存到MongoDB
                 d = dict()
@@ -40,7 +44,7 @@ def SaveRanking(dict_rank):
                 d["r_rank"] = i_ranking
                 d["r_name"] = str_stock_name
                 d["r_code"] = int_stock_code
-                d["r_datetime"] = tz_utc_8.fromutc(datetime.utcnow().replace(tzinfo=tz_utc_8))
+                d["r_datetime"] = dtPushingDate
                 d["r_price"] = ranking_stock["price"]
                 ranking = Ranking(**d)
                 StockPushing_Mongo_DAL.SaveRanking(ranking)
@@ -54,8 +58,11 @@ def SaveRanking(dict_rank):
 
                     #print("%s : %d" % (str_stock_name, dict_hitting_stock[str_stock_name]))
                     if dict_hitting_stock[str_stock_name] == int_hit_rule:
-                        print("the stock %s which code is %s already hit %d times, pushing price is %.2f" %
-                              (str_stock_name,'{:0>6}'.format(str(d["r_code"])) ,int_hit_rule, d["r_price"]))
+
+                        print("the stock %s which is %s already hit %d times, pushing price is %.2f" %
+                                (str_stock_name, '{:0>6}'.format(str(d["r_code"])), int_hit_rule, d["r_price"]))
+                        JpushHelper.Push_message("Found the stock which code is %s already hit %d times, pushing price is %.2f" %
+                                ( '{:0>6}'.format(str(d["r_code"])), int_hit_rule, d["r_price"]))
 
                         p = dict()
                         p["p_name"] = str_stock_name
@@ -64,6 +71,9 @@ def SaveRanking(dict_rank):
                         p["p_dict_list"] = dict_rank
                         pushing = PushingStock(**p)
                         StockPushing_Mongo_DAL.SavePushingStock(pushing)
+
+
+
                         #db.getCollection('ranking').find({"r_datetime":{$gte:ISODate("2018-01-05T00:00:00+08:00")},"r_datetime":{$lte:ISODate("2018-01-05T06:45:59+08:00")}})
 
 

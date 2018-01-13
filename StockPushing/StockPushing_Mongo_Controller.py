@@ -26,109 +26,118 @@ def SaveRanking(request):
 
     str_json = """
 {
-    "compare": 3,
-    "hit_rule": 4,
-    "push_date_time": "2018-01-07 10:01:03",
-    "list": [
-        {
-            "name": "raising",
-            "ranking": [
-                {
-                    "name": "振静股份",
-                    "code": 111,
-                    "price": 1
-                },
-                {
-                    "name": "北斗星通",
-                    "code": 222,
-                    "price": 2
-                }
-                ,
-                {
-                    "name": "北京科锐",
-                    "code": 222,
-                    "price": 2
-                }
-            ]
-        },
-        {
-            "name": "change",
-            "ranking": [
-                {
-                    "name": "美芝股份",
-                    "code": 333,
-                    "price": 3
-                },
-                {
-                    "name": "蒙草生态",
-                    "code": 444,
-                    "price": 4
-                }
-                ,
-                {
-                    "name": "北京科锐",
-                    "code": 222,
-                    "price": 2
-                }
-            ]
-        },
-        {
-            "name": "deal",
-            "ranking": [
-                {
-                    "name": "文一科技",
-                    "code": 555,
-                    "price": 5
-                },
-                {
-                    "name": "雅克科技",
-                    "code": 666,
-                    "price": 6
-                }
-                ,
-                {
-                    "name": "北京科锐",
-                    "code": 222,
-                    "price": 2
-                }
-            ]
-        },
-        {
-            "name": "net",
-            "ranking": [
-                {
-                    "name": "北斗星通",
-                    "code": 777,
-                    "price": 7
-                },
-                {
-                    "name": "武汉凡谷",
-                    "code": 888,
-                    "price": 8
-                }
-                ,
-                {
-                    "name": "北京科锐",
-                    "code": 222,
-                    "price": 2
-                }
-            ]
-        }
-    ]
+	"compare": 3,
+	"hit_rule": 3,
+	"push_date_time": "2018-01-13 09:13:29",
+	"list": [{
+		"name": "raising",
+		"ranking": [{
+			"code": 0,
+			"price": 9.55,
+			"name": "江泉实业"
+		}, {
+			"code": 0,
+			"price": 19.32,
+			"name": "文投控股"
+		}, {
+			"code": 0,
+			"price": 14.89,
+			"name": "旋极信息"
+		}, {
+			"code": 0,
+			"price": 25.85,
+			"name": "君禾股份"
+		}, {
+			"code": 0,
+			"price": 10.01,
+			"name": "欧浦智网"
+		}]
+	}, {
+		"name": "change",
+		"ranking": [{
+			"code": 0,
+			"price": 36.0,
+			"name": "华森制药"
+		}, {
+			"code": 0,
+			"price": 25.85,
+			"name": "君禾股份"
+		}, {
+			"code": 0,
+			"price": 94.04,
+			"name": "深南电路"
+		}, {
+			"code": 0,
+			"price": 44.98,
+			"name": "美芝股份"
+		}, {
+			"code": 0,
+			"price": 5740.0,
+			"name": "中设股份"
+		}]
+	}, {
+		"name": "deal",
+		"ranking": [{
+			"code": 0,
+			"price": 19.32,
+			"name": "文投控股"
+		}, {
+			"code": 0,
+			"price": 53.3,
+			"name": "格力电器"
+		}, {
+			"code": 0,
+			"price": 7.82,
+			"name": "驰宏锌锗"
+		}, {
+			"code": 0,
+			"price": 788.42,
+			"name": "贵州茅台"
+		}, {
+			"code": 0,
+			"price": 64.82,
+			"name": "料大讯飞"
+		}]
+	}, {
+		"name": "net",
+		"ranking": [{
+			"code": 0,
+			"price": 19.32,
+			"name": "文投控股"
+		}, {
+			"code": 0,
+			"price": 53.3,
+			"name": "格力电器"
+		}, {
+			"code": 0,
+			"price": 7.82,
+			"name": "驰宏锌锗"
+		}, {
+			"code": 0,
+			"price": 64.82,
+			"name": "料大讯飞"
+		}, {
+			"code": 0,
+			"price": 788.42,
+			"name": "贵州茅台"
+		}]
+	}]
 }
 """
 
     str_request_json = request.POST.get('str_json')
     model = HttpResp()
-    if str_request_json == None:
-        d = json.loads(str_json)
+    if str_request_json != None:
+        d = json.loads(str_request_json)
         model.Model = StockPushing_Mongo_BLL.SaveRanking(d)
         model.Status = '200'
         model.Msg = 'success'
     else:
-        model.Model = "No json str"
+        d = json.loads(str_json)
+        model.Model = StockPushing_Mongo_BLL.SaveRanking(d)
+        # model.Model = "Not correct json_str!!"
         model.Status = '511'
-        model.Msg = 'Failed'
+        model.Msg = 'Failed - Not correct json_str!!'
 
 
 

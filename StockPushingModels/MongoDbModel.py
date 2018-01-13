@@ -1,3 +1,4 @@
+#encoding: utf-8
 from mongoengine import Document
 from mongoengine import IntField
 from mongoengine import StringField
