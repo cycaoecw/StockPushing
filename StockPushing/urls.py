@@ -48,4 +48,6 @@ urlpatterns = [
     #用mongoDB后的api
     url(r'^MongoTestSave', StockPushing_Mongo_Controller.TestSave),
     url(r'^SaveRanking/$', StockPushing_Mongo_Controller.SaveRanking),
+    url(r'^GetRankingDateList/', StockPushing_Mongo_Controller.GetRankingDateList),
+    url(r'^GetRankingListByDate/$', StockPushing_Mongo_Controller.GetRankingListByDate),
 ]

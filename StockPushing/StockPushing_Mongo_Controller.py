@@ -17,6 +17,23 @@ def TestSave(request):
 
     return HttpResponse(json.dumps(model, default=lambda o: o.__dict__, ensure_ascii=False))
 
+def GetRankingDateList(request):
+    model = HttpResp()
+    model.Model = StockPushing_Mongo_BLL.GetRankingDateList()
+    model.Status = '200'
+    model.Msg = 'success'
+
+    return HttpResponse(json.dumps(model, default=lambda o: o.__dict__, ensure_ascii=False))
+
+def GetRankingListByDate(request):
+    model = HttpResp()
+    checkDate = request.GET.get('checkdate')  # e.g. 2018-01-17
+    model.Model = StockPushing_Mongo_BLL.GetRankingListByDate(checkDate)
+    model.Status = '200'
+    model.Msg = 'success'
+
+    return HttpResponse(json.dumps(model, default=lambda o: o.__dict__, ensure_ascii=False))
+
 def SaveRanking(request):
     '''
     test

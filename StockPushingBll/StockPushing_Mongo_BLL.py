@@ -10,6 +10,18 @@ def TestSave():
     StockPushing_Mongo_DAL.TestSave()
     return
 
+def GetRankingDateList():
+
+    return StockPushing_Mongo_DAL.GetRankingDateList()
+
+def GetRankingListByDate(checkDate):
+    cursor = StockPushing_Mongo_DAL.GetRankingListByDate(checkDate)
+    list_ranking = []
+    for r in cursor:
+        list_ranking.append(r)
+
+    return list_ranking
+
 def SaveRanking(dict_rank):
 
 
