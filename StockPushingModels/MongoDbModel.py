@@ -10,7 +10,7 @@ import Common.MongoDbHelper
 
 Common.MongoDbHelper.ConnectMongoDB()
 
-class Ranking(Document):
+class RankingDaily(Document):
     """
     排行榜
     0. default, 异常
@@ -25,6 +25,8 @@ class Ranking(Document):
     r_code = IntField(default=0)
     r_datetime = DateTimeField()
     r_price = DecimalField(default=0, precision=2)
+    r_date_str = StringField(default="2000-01-01")
+    r_time_str = StringField(default="00:00:00")
 
 class PushingStock(Document):
     p_type =IntField(default = 0)

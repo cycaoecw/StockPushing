@@ -1,6 +1,6 @@
 #encoding: utf-8
 from StockPushingDAL import StockPushing_Mongo_DAL
-from StockPushingModels.MongoDbModel import Ranking, PushingStock
+from StockPushingModels.MongoDbModel import RankingDaily, PushingStock
 from StockPushingDAL import StockPushingDal
 from datetime import datetime, timedelta, time
 from Common import JpushHelper
@@ -46,7 +46,9 @@ def SaveRanking(dict_rank):
                 d["r_code"] = int_stock_code
                 d["r_datetime"] = dtPushingDate
                 d["r_price"] = ranking_stock["price"]
-                ranking = Ranking(**d)
+                d["r_date_str"] = dtPushingDate.strftime('%Y-%m-%d')
+                d["r_time_str"] = dtPushingDate.strftime('%H:%M:%S')
+                ranking = RankingDaily(**d)
                 StockPushing_Mongo_DAL.SaveRanking(ranking)
 
                 #检查股票在规定前X中hit中多少次，大于hit_rule就推送

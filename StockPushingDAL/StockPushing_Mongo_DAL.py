@@ -1,5 +1,5 @@
 #encoding: utf-8
-from StockPushingModels.MongoDbModel import Ranking
+from StockPushingModels.MongoDbModel import RankingDaily
 
 def TestSave():
     d = dict()
@@ -10,7 +10,7 @@ def TestSave():
     d["r_date"] = "2018-01-01"
     d["r_time"] = "09:30"
 
-    ranking = Ranking(**d)
+    ranking = RankingDaily(**d)
     try:
         ranking.save()
     except Exception as e:

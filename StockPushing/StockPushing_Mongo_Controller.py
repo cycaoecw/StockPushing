@@ -27,99 +27,99 @@ def SaveRanking(request):
     str_json = """
 {
 	"compare": 3,
-	"hit_rule": 3,
-	"push_date_time": "2018-01-13 09:13:29",
+	"hit_rule": 4,
+	"push_date_time": "2018-01-15 10:50:02",
 	"list": [{
 		"name": "raising",
 		"ranking": [{
 			"code": 0,
-			"price": 9.55,
-			"name": "江泉实业"
+			"price": 29.88,
+			"name": "登云股份"
 		}, {
 			"code": 0,
-			"price": 19.32,
-			"name": "文投控股"
+			"price": 7.18,
+			"name": "壹桥股份"
 		}, {
 			"code": 0,
-			"price": 14.89,
-			"name": "旋极信息"
+			"price": 20.78,
+			"name": "蓝帆医疗"
 		}, {
 			"code": 0,
-			"price": 25.85,
-			"name": "君禾股份"
+			"price": 10.88,
+			"name": "凯恩股份"
 		}, {
 			"code": 0,
-			"price": 10.01,
-			"name": "欧浦智网"
+			"price": 11.52,
+			"name": "日播时尚"
 		}]
 	}, {
 		"name": "change",
 		"ranking": [{
 			"code": 0,
-			"price": 36.0,
-			"name": "华森制药"
+			"price": 11.2,
+			"name": "迪生力"
 		}, {
 			"code": 0,
-			"price": 25.85,
-			"name": "君禾股份"
+			"price": 39.72,
+			"name": "联诚精密"
 		}, {
 			"code": 0,
-			"price": 94.04,
-			"name": "深南电路"
+			"price": 16.91,
+			"name": "卫信康"
 		}, {
 			"code": 0,
-			"price": 44.98,
-			"name": "美芝股份"
+			"price": 7.18,
+			"name": "壹桥股份"
 		}, {
 			"code": 0,
-			"price": 5740.0,
-			"name": "中设股份"
+			"price": 1445.0,
+			"name": "金龙羽"
 		}]
 	}, {
 		"name": "deal",
 		"ranking": [{
 			"code": 0,
-			"price": 19.32,
-			"name": "文投控股"
+			"price": 36.84,
+			"name": "三聚环保"
 		}, {
 			"code": 0,
-			"price": 53.3,
-			"name": "格力电器"
+			"price": 8.83,
+			"name": "潍柴动力"
 		}, {
 			"code": 0,
-			"price": 7.82,
-			"name": "驰宏锌锗"
+			"price": 7.18,
+			"name": "壹桥股份"
 		}, {
 			"code": 0,
-			"price": 788.42,
-			"name": "贵州茅台"
+			"price": 20.78,
+			"name": "蓝帆医疗"
 		}, {
 			"code": 0,
-			"price": 64.82,
-			"name": "料大讯飞"
+			"price": 14.91,
+			"name": "上海银行"
 		}]
 	}, {
 		"name": "net",
 		"ranking": [{
 			"code": 0,
-			"price": 19.32,
-			"name": "文投控股"
+			"price": 7.18,
+			"name": "壹桥股份"
 		}, {
 			"code": 0,
-			"price": 53.3,
-			"name": "格力电器"
+			"price": 8.83,
+			"name": "潍柴动力"
 		}, {
 			"code": 0,
-			"price": 7.82,
-			"name": "驰宏锌锗"
+			"price": 36.84,
+			"name": "聚环保"
 		}, {
 			"code": 0,
-			"price": 64.82,
-			"name": "料大讯飞"
+			"price": 20.78,
+			"name": "蓝帆医疗"
 		}, {
 			"code": 0,
-			"price": 788.42,
-			"name": "贵州茅台"
+			"price": 14.91,
+			"name": "上海银行"
 		}]
 	}]
 }
@@ -133,9 +133,9 @@ def SaveRanking(request):
         model.Status = '200'
         model.Msg = 'success'
     else:
-        d = json.loads(str_json)
-        model.Model = StockPushing_Mongo_BLL.SaveRanking(d)
-        # model.Model = "Not correct json_str!!"
+        # d = json.loads(str_json)
+        # model.Model = StockPushing_Mongo_BLL.SaveRanking(d)
+        model.Model = "Not correct json_str!!"
         model.Status = '511'
         model.Msg = 'Failed - Not correct json_str!!'
 
