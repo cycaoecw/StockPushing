@@ -12,7 +12,7 @@ def TestSave():
 
 def GetRankingDateList():
 
-    return StockPushing_Mongo_DAL.GetRankingDateList()
+    return sorted(StockPushing_Mongo_DAL.GetRankingDateList(), reverse=True)
 
 def GetRankingListByDate(checkDate):
     cursor = StockPushing_Mongo_DAL.GetRankingListByDate(checkDate)
