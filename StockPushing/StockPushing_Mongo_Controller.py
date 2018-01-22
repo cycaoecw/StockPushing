@@ -150,9 +150,9 @@ def SaveRanking(request):
         model.Status = '200'
         model.Msg = 'success'
     else:
-        d = json.loads(str_json)
-        model.Model = StockPushing_Mongo_BLL.SaveRanking(d)
-        # model.Model = "Not correct json_str!!"
+        # d = json.loads(str_json)
+        # model.Model = StockPushing_Mongo_BLL.SaveRanking(d)
+        model.Model = "Not correct json_str!!"
         model.Status = '511'
         model.Msg = 'Failed - Not correct json_str!!'
 
