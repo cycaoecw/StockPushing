@@ -43,7 +43,7 @@ def SaveRanking(request):
 
     str_json = """
 {
-	"compare": 3,
+	"compare": 4,
 	"hit_rule": 4,
 	"push_date_time": "2018-01-15 10:50:02",
 	"list": [{
@@ -120,7 +120,7 @@ def SaveRanking(request):
 		"ranking": [{
 			"code": 0,
 			"price": 7.18,
-			"name": "壹桥股份"
+			"name": "桥股份"
 		}, {
 			"code": 0,
 			"price": 8.83,
@@ -150,9 +150,9 @@ def SaveRanking(request):
         model.Status = '200'
         model.Msg = 'success'
     else:
-        # d = json.loads(str_json)
-        # model.Model = StockPushing_Mongo_BLL.SaveRanking(d)
-        model.Model = "Not correct json_str!!"
+        d = json.loads(str_json)
+        model.Model = StockPushing_Mongo_BLL.SaveRanking(d)
+        # model.Model = "Not correct json_str!!"
         model.Status = '511'
         model.Msg = 'Failed - Not correct json_str!!'
 
