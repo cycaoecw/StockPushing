@@ -65,10 +65,27 @@ def SaveRanking(dict_rank):
 
                 #检查股票在规定前X中hit中多少次，大于hit_rule就推送
                 if i_ranking <= int_compare_rank:
-                    if str_stock_name in dict_hitting_stock:
-                        dict_hitting_stock[str_stock_name] = dict_hitting_stock[str_stock_name] + 1
-                    else:
+                    flag_found = False
+                    for s_to_matching in dict_hitting_stock:
+                        if str_stock_name in s_to_matching:#如果股票名字已经包含在dict里
+                            dict_hitting_stock[s_to_matching] = dict_hitting_stock[s_to_matching] + 1
+                            str_stock_name = s_to_matching
+                            flag_found = True
+                            break
+
+                        elif s_to_matching in str_stock_name:#如果dict里的名字包含在股票名字里
+                            dict_hitting_stock[str_stock_name] = dict_hitting_stock[s_to_matching] + 1
+                            dict_hitting_stock.popitem(s_to_matching)
+                            flag_found = True
+                            break
+
+                    if not flag_found:
                         dict_hitting_stock[str_stock_name] = 1
+
+                    # if str_stock_name in dict_hitting_stock:
+                    #     dict_hitting_stock[str_stock_name] = dict_hitting_stock[str_stock_name] + 1
+                    # else:
+                    #     dict_hitting_stock[str_stock_name] = 1
 
                     #print("%s : %d" % (str_stock_name, dict_hitting_stock[str_stock_name]))
                     if dict_hitting_stock[str_stock_name] == int_hit_rule:
