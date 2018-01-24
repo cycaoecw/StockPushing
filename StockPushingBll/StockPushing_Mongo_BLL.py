@@ -47,7 +47,7 @@ def SaveRanking(dict_rank):
             for ranking_stock in one_type_rank["ranking"]:
                 i_ranking = i_ranking + 1
                 str_stock_name = ranking_stock["name"]
-                int_stock_code = getStockCodeByName(ranking_stock["name"])  # int(ranking_stock["code"])
+                int_stock_code = GetCodeByName(ranking_stock["name"])  # int(ranking_stock["code"])
                 ranking_stock["code"] = int_stock_code
 
                 #把记录保存到MongoDB
@@ -116,3 +116,16 @@ def SaveRanking(dict_rank):
 
 def getStockCodeByName(stockName):
     return StockPushingDal.getStockCodeByName(stockName)
+
+def GetCodeByName(searching_name):
+    return StockPushing_Mongo_DAL.GetCodeByName(searching_name)
+
+def UpdateCodeByName(updating_code, updating_name):
+    # s_code = StockPushing_Mongo_DAL.GetCodeByName(updating_name)
+    s_name = StockPushing_Mongo_DAL.GetNameByCode(updating_code)
+    flag = True
+    if flag == '0':
+        flag = StockPushing_Mongo_DAL.SaveStockCodeName(updating_code, updating_name)
+    else:
+        flag = StockPushing_Mongo_DAL.UpdateNameByCode(updating_code, updating_name)
+    return flag
