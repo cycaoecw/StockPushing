@@ -81,3 +81,7 @@ def UpdateCodeByName(updating_code, updating_name):
 def UpdateNameByCode(updating_code, updating_name):
     results = StockCodeName.objects(s_code = updating_code).update(s_name = updating_name)
     return True
+
+def UpdateRankingCodeByName(updating_code, updating_name):
+    results = RankingDaily.objects(r_name = updating_name).update(r_code = updating_code)
+    return

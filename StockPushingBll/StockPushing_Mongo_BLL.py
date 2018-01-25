@@ -124,8 +124,9 @@ def UpdateCodeByName(updating_code, updating_name):
     # s_code = StockPushing_Mongo_DAL.GetCodeByName(updating_name)
     s_name = StockPushing_Mongo_DAL.GetNameByCode(updating_code)
     flag = True
-    if flag == '0':
+    if s_name == '0':
         flag = StockPushing_Mongo_DAL.SaveStockCodeName(updating_code, updating_name)
     else:
         flag = StockPushing_Mongo_DAL.UpdateNameByCode(updating_code, updating_name)
+    StockPushing_Mongo_DAL.UpdateRankingCodeByName(updating_code, updating_name)
     return flag
