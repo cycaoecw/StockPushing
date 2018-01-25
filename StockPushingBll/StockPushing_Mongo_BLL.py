@@ -4,6 +4,8 @@ from StockPushingModels.MongoDbModel import RankingDaily, PushingStock
 from StockPushingDAL import StockPushingDal
 from datetime import datetime, timedelta, time
 from Common import JpushHelper
+from StockPushingModels.ModelUsingORM import RankingDailyORM
+
 import pytz
 
 def TestSave():
@@ -21,6 +23,15 @@ def GetRankingListByDate(checkDate):
         list_ranking.append(r)
 
     return list_ranking
+
+def GetRankingListByDateAndCode(checkDate, checkCode):
+    rankings = StockPushing_Mongo_DAL.GetRankingListByDateAndCode(checkDate, checkCode)
+    list_ranking = []
+
+    for r in rankings:
+        list_ranking.append(RankingDailyORM(r.r_type, r.r_rank, r.r_name, r.r_code, str(r.r_datetime), str(r.r_price), r.r_date_str, r.r_time_str))
+
+    return list_ranking#StockPushing_Mongo_DAL.GetRankingListByDateAndCode(checkDate, checkCode)
 
 def SaveRanking(dict_rank):
 

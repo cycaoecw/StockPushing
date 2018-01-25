@@ -5,6 +5,7 @@ from mongoengine import StringField
 from mongoengine import DateTimeField
 from mongoengine import DecimalField
 from mongoengine import DictField
+from mongoengine import queryset_manager
 
 import Common.MongoDbHelper
 
@@ -27,6 +28,12 @@ class RankingDaily(Document):
     r_price = DecimalField(default=0, precision=2)
     r_date_str = StringField(default="2000-01-01")
     r_time_str = StringField(default="00:00:00")
+
+    @queryset_manager
+    def objects(doc_cls, queryset):
+        # This may actually also be done by defining a default ordering for
+        # the document, but this illustrates the use of manager methods
+        return queryset.order_by('-r_datetime')
 
 class PushingStock(Document):
     p_type =IntField(default = 0)

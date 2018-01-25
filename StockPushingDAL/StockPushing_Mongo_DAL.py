@@ -1,6 +1,7 @@
 #encoding: utf-8
 from StockPushingModels.MongoDbModel import RankingDaily, StockCodeName
 
+
 def TestSave():
     d = dict()
     d["r_type"] = 1
@@ -85,3 +86,7 @@ def UpdateNameByCode(updating_code, updating_name):
 def UpdateRankingCodeByName(updating_code, updating_name):
     results = RankingDaily.objects(r_name = updating_name).update(r_code = updating_code)
     return
+
+def GetRankingListByDateAndCode(checkDate, checkCode):
+    rankings = RankingDaily.objects(r_date_str = checkDate, r_code = checkCode)
+    return rankings

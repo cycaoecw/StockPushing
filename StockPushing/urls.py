@@ -52,4 +52,5 @@ urlpatterns = [
     url(r'^GetRankingListByDate/$', StockPushing_Mongo_Controller.GetRankingListByDate),
     url(r'^GetCodeByName/$', StockPushing_Mongo_Controller.GetCodeByName),
     url(r'^UpdateCodeByName/$', StockPushing_Mongo_Controller.UpdateCodeByName),
+    url(r'^GetRankingListByDateAndCode/$', StockPushing_Mongo_Controller.GetRankingListByDateAndCode),
 ]

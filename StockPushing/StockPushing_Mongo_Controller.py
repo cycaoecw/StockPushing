@@ -179,3 +179,13 @@ def UpdateCodeByName(request):
     model.Msg = 'success'
 
     return HttpResponse(json.dumps(model, default=lambda o: o.__dict__, ensure_ascii=False))
+
+def GetRankingListByDateAndCode(request):
+    model = HttpResp()
+    checkDate = request.GET.get('checkDate')  # e.g. 2018-01-25
+    checkCode = request.GET.get('checkCode')  # e.g. 傲农生物
+    model.Model = StockPushing_Mongo_BLL.GetRankingListByDateAndCode(checkDate, checkCode)
+    model.Status = '200'
+    model.Msg = 'success'
+
+    return HttpResponse(json.dumps(model, default=lambda o: o.__dict__, ensure_ascii=False))
