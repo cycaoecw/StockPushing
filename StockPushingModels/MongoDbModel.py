@@ -35,3 +35,7 @@ class PushingStock(Document):
     p_price = DecimalField(default=0, precision=2)
     p_dattime = DateTimeField()
     p_dict_list = DictField()
+
+class StockCodeName(Document):
+    s_name = StringField(default="")
+    s_code = IntField(default=0)

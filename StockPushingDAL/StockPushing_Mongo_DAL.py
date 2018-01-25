@@ -1,5 +1,5 @@
 #encoding: utf-8
-from StockPushingModels.MongoDbModel import RankingDaily
+from StockPushingModels.MongoDbModel import RankingDaily, StockCodeName
 
 def TestSave():
     d = dict()
@@ -47,3 +47,37 @@ def GetRankingListByDate(checkDate):
     {'$match': {'_id.day': checkDate}}
     ])
     return list
+
+def GetCodeByName(searching_name):
+    results = StockCodeName.objects(s_name = searching_name)
+    if len(results) > 0:
+        return results[0]["s_code"]
+    else:
+        return 0
+
+def GetNameByCode(searching_code):
+    results = StockCodeName.objects(s_code = searching_code)
+    if len(results) > 0:
+        return results[0]["s_name"]
+    else:
+        return '0'
+
+def SaveStockCodeName(s_code, s_name):
+    d = dict()
+    d["s_code"] = s_code
+    d["s_name"] = s_name
+    s = StockCodeName(**d)
+    try:
+        s.save()
+        return True
+    except Exception as e:
+        print("save failed data=%s" % s.to_json())
+        return False
+
+def UpdateCodeByName(updating_code, updating_name):
+    results = StockCodeName.objects(s_name = updating_name).update(set__s_code = updating_code)
+    return True
+
+def UpdateNameByCode(updating_code, updating_name):
+    results = StockCodeName.objects(s_code = updating_code).update(s_name = updating_name)
+    return True

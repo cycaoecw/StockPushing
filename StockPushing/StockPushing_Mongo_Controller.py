@@ -160,3 +160,22 @@ def SaveRanking(request):
 
 
     return HttpResponse(json.dumps(model, default=lambda o: o.__dict__, ensure_ascii=False))
+
+def GetCodeByName(request):
+    model = HttpResp()
+    searching_name = request.GET.get('searching_name')  # e.g. 读者传媒
+    model.Model = StockPushing_Mongo_BLL.GetCodeByName(searching_name)
+    model.Status = '200'
+    model.Msg = 'success'
+
+    return HttpResponse(json.dumps(model, default=lambda o: o.__dict__, ensure_ascii=False))
+
+def UpdateCodeByName(request):
+    model = HttpResp()
+    updating_code = request.GET.get('updating_code')  # e.g. 读者传媒
+    updating_name = request.GET.get('updating_name')  # e.g. 读者传媒
+    model.Model = StockPushing_Mongo_BLL.UpdateCodeByName(updating_code, updating_name)
+    model.Status = '200'
+    model.Msg = 'success'
+
+    return HttpResponse(json.dumps(model, default=lambda o: o.__dict__, ensure_ascii=False))
