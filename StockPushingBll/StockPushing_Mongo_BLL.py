@@ -141,3 +141,20 @@ def UpdateCodeByName(updating_code, updating_name):
         flag = StockPushing_Mongo_DAL.UpdateNameByCode(updating_code, updating_name)
     StockPushing_Mongo_DAL.UpdateRankingCodeByName(updating_code, updating_name)
     return flag
+
+def GetRankingCountByDateAndCode(checkDate, checkCode):
+    cursor = StockPushing_Mongo_DAL.GetRankingCountByDateAndCode(checkDate, checkCode)
+    list_ranking = []
+    for r in cursor:
+        list_ranking.append(r)
+
+    return list_ranking
+
+def GetRankingListByDate_Code_type(checkDate, checkCode, checkType):
+    rankings = StockPushing_Mongo_DAL.GetRankingListByDateAndCode(checkDate, checkCode)
+    list_ranking = []
+
+    for r in rankings:
+        list_ranking.append(RankingDailyORM(r.r_type, r.r_rank, r.r_name, r.r_code, str(r.r_datetime), str(r.r_price), r.r_date_str, r.r_time_str))
+
+    return list_ranking

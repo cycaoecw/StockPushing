@@ -183,9 +183,28 @@ def UpdateCodeByName(request):
 def GetRankingListByDateAndCode(request):
     model = HttpResp()
     checkDate = request.GET.get('checkDate')  # e.g. 2018-01-25
-    checkCode = request.GET.get('checkCode')  # e.g. 傲农生物
+    checkCode = request.GET.get('checkCode')  # e.g. 603363
     model.Model = StockPushing_Mongo_BLL.GetRankingListByDateAndCode(checkDate, checkCode)
     model.Status = '200'
     model.Msg = 'success'
 
+    return HttpResponse(json.dumps(model, default=lambda o: o.__dict__, ensure_ascii=False))
+
+def GetRankingCountByDateAndCode(request):
+    model = HttpResp()
+    checkDate = request.GET.get('checkDate')  # e.g. 2018-01-25
+    checkCode = request.GET.get('checkCode')  # e.g. 603363
+    model.Model = StockPushing_Mongo_BLL.GetRankingCountByDateAndCode(checkDate, checkCode)
+    model.Status = '200'
+    model.Msg = 'success'
+    return HttpResponse(json.dumps(model, default=lambda o: o.__dict__, ensure_ascii=False))
+
+def GetRankingListByDate_Code_type(request):
+    model = HttpResp()
+    checkDate = request.GET.get('checkDate')  # e.g. 2018-01-25
+    checkCode = request.GET.get('checkCode')  # e.g. 603363
+    checkType = request.GET.get('checkType')  # e.g. raising
+    model.Model = StockPushing_Mongo_BLL.GetRankingListByDate_Code_type(checkDate, checkCode, checkType)
+    model.Status = '200'
+    model.Msg = 'success'
     return HttpResponse(json.dumps(model, default=lambda o: o.__dict__, ensure_ascii=False))

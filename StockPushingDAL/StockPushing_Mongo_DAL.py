@@ -90,3 +90,20 @@ def UpdateRankingCodeByName(updating_code, updating_name):
 def GetRankingListByDateAndCode(checkDate, checkCode):
     rankings = RankingDaily.objects(r_date_str = checkDate, r_code = checkCode)
     return rankings
+
+def GetRankingCountByDateAndCode(checkDate, checkCode):
+    list = RankingDaily._get_collection().aggregate([
+    { '$group' :
+        { '_id' : {'day':'$r_date_str', 'code':'$r_code','type':'$r_type'},
+          'count' : { '$sum' : 1 }
+        }
+    },
+    { '$sort' : {'count':-1}}
+    ,
+    { '$match' : {'_id.day': checkDate,'_id.code': int(checkCode)}}
+    ])
+    return list
+
+def GetRankingListByDate_Code_type(checkDate, checkCode, checkType):
+    rankings = RankingDaily.objects(r_date_str = checkDate, r_code = checkCode, r_type = checkType)
+    return rankings
