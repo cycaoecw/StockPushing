@@ -107,3 +107,16 @@ def GetRankingCountByDateAndCode(checkDate, checkCode):
 def GetRankingListByDate_Code_type(checkDate, checkCode, checkType):
     rankings = RankingDaily.objects(r_date_str = checkDate, r_code = checkCode, r_type = checkType)
     return rankings
+
+def GetNameForUnknowCodeOnDate(checkDate):
+    list = RankingDaily._get_collection().aggregate([
+    { '$group' :
+        { '_id' : {'day':'$r_date_str', 'code':'$r_code','name':'$r_name'},
+          'count' : { '$sum' : 1 },
+          'name' : {'$first': "$r_name"}
+        }
+    },
+    { '$sort' : {'_id.day': -1, 'count':-1}},
+    {'$match': {'_id.day': checkDate,'_id.code': 0}}
+    ])
+    return list

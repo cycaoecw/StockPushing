@@ -208,3 +208,21 @@ def GetRankingListByDate_Code_type(request):
     model.Status = '200'
     model.Msg = 'success'
     return HttpResponse(json.dumps(model, default=lambda o: o.__dict__, ensure_ascii=False))
+
+def TryGetStockCodeByNameThruInterenet(request):
+    model = HttpResp()
+    checkName = request.GET.get('checkName')  # e.g. ST金宇
+
+    model.Model = StockPushing_Mongo_BLL.TryGetStockCodeByNameThruInterenet(checkName)
+    model.Status = '200'
+    model.Msg = 'success'
+    return HttpResponse(json.dumps(model, default=lambda o: o.__dict__, ensure_ascii=False))
+
+def GetNameForUnknowCodeOnDate(request):
+    model = HttpResp()
+    checkDate = request.GET.get('checkDate')  # e.g. 2018-01-26
+
+    model.Model = StockPushing_Mongo_BLL.GetNameForUnknowCodeOnDate(checkDate)
+    model.Status = '200'
+    model.Msg = 'success'
+    return HttpResponse(json.dumps(model, default=lambda o: o.__dict__, ensure_ascii=False))

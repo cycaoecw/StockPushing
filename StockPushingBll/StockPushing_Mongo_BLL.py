@@ -5,6 +5,9 @@ from StockPushingDAL import StockPushingDal
 from datetime import datetime, timedelta, time
 from Common import JpushHelper
 from StockPushingModels.ModelUsingORM import RankingDailyORM
+import re
+from bs4 import BeautifulSoup
+import requests
 
 import pytz
 
@@ -151,10 +154,39 @@ def GetRankingCountByDateAndCode(checkDate, checkCode):
     return list_ranking
 
 def GetRankingListByDate_Code_type(checkDate, checkCode, checkType):
-    rankings = StockPushing_Mongo_DAL.GetRankingListByDateAndCode(checkDate, checkCode)
+    rankings = StockPushing_Mongo_DAL.GetRankingListByDate_Code_type(checkDate, checkCode, checkType)
     list_ranking = []
 
     for r in rankings:
         list_ranking.append(RankingDailyORM(r.r_type, r.r_rank, r.r_name, r.r_code, str(r.r_datetime), str(r.r_price), r.r_date_str, r.r_time_str))
 
+    return list_ranking
+
+def TryGetStockCodeByNameThruInterenet(checkName):
+    url = 'http://www.baidu.com/s?wd=' + checkName + ' 代码'
+    content = requests.get(url)
+
+    soup = BeautifulSoup(content.text, 'html.parser')
+    print(soup)
+    results = soup.find_all('div', class_='result c-container ')
+    dic_potential = dict()
+    for r in results:
+        print(r.text)
+        numbers = re.findall(r'\d{6}', r.text)#把六位数字的字符串全部找出来
+        for n in numbers:
+            if n in dic_potential:
+                dic_potential[n] = dic_potential[n] + 1
+            else:
+                dic_potential[n] = 1
+
+    sorted(dic_potential)
+    for key, value in dic_potential.items():
+        return key
+    return
+
+def GetNameForUnknowCodeOnDate(checkDate):
+    cursor = StockPushing_Mongo_DAL.GetNameForUnknowCodeOnDate(checkDate)
+    list_ranking = []
+    for r in cursor:
+        list_ranking.append(r)
     return list_ranking
