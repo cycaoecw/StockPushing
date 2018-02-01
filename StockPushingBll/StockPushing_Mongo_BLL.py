@@ -142,7 +142,7 @@ def UpdateCodeByName(updating_code, updating_name):
         flag = StockPushing_Mongo_DAL.SaveStockCodeName(updating_code, updating_name)
     else:
         flag = StockPushing_Mongo_DAL.UpdateNameByCode(updating_code, updating_name)
-    StockPushing_Mongo_DAL.UpdateRankingCodeByName(updating_code, updating_name)
+    StockPushing_Mongo_DAL.UpdateRankingCodeByName(updating_code, updating_name, 0)
     return flag
 
 def GetRankingCountByDateAndCode(checkDate, checkCode):
@@ -163,10 +163,12 @@ def GetRankingListByDate_Code_type(checkDate, checkCode, checkType):
     return list_ranking
 
 def TryGetStockCodeByNameThruInterenet(checkName):
-    url = 'http://www.baidu.com/s?wd=' + checkName + ' 代码'
-    content = requests.get(url)
+    # url = 'http://www.baidu.com/s?wd=' + checkName + '代码'
+    content = requests.get(url='http://www.baidu.com/s', params={'wd': checkName + u'股票代码'})
 
-    soup = BeautifulSoup(content.text, 'html.parser')
+    # content = requests.get(url)
+
+    soup = BeautifulSoup(content.text, 'lxml')
     print(soup)
     results = soup.find_all('div', class_='result c-container ')
     dic_potential = dict()
@@ -181,8 +183,19 @@ def TryGetStockCodeByNameThruInterenet(checkName):
 
     sorted(dic_potential)
     for key, value in dic_potential.items():
-        return key
-    return
+        return [key]
+
+    if len(dic_potential) == 0:
+        numbers = re.findall(r'\d{6}', content.text)  # 把六位数字的字符串全部找出来
+        for n in numbers:
+            if n in dic_potential:
+                dic_potential[n] = dic_potential[n] + 1
+            else:
+                dic_potential[n] = 1
+    for key, value in dic_potential.items():
+        return [key]
+
+    return []
 
 def GetNameForUnknowCodeOnDate(checkDate):
     cursor = StockPushing_Mongo_DAL.GetNameForUnknowCodeOnDate(checkDate)
